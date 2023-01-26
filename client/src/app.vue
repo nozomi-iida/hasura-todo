@@ -1,20 +1,15 @@
 <template>
   <div>
-    <h1>{{ data?.todos?.length }} todos</h1>
+    <h1>TODO App</h1>
+    <ul>
+      <li v-for="todo in data?.todos" :key="todo.id">
+        {{ todo.title }}
+      </li>
+    </ul>
   </div>
 </template>
 <script lang="ts" setup>
-const query = gql`
-  query GetTodos {
-    todos {
-      id
-      created_at
-      updated_at
-      title
-      is_done
-    }
-  }
-`;
+import { GetTodosDocument } from "./gql/graphql";
 
-const { data } = await useAsyncQuery<{ todos: any[] }>(query);
+const { data } = await useAsyncQuery(GetTodosDocument);
 </script>

@@ -1,10 +1,14 @@
 <template>
-  <ElForm :inline="true" :model="todoParams">
+  <ElForm
+    :inline="true"
+    :model="todoParams"
+    @submit.prevent="onSubmit(todoParams.title)"
+  >
     <ElFormItem>
       <ElInput v-model="todoParams.title" />
     </ElFormItem>
     <ElFormItem>
-      <ElButton @click="$emit('onSubmit', todoParams.title)">作成</ElButton>
+      <ElButton native-type="submit">作成</ElButton>
     </ElFormItem>
   </ElForm>
 </template>
@@ -12,4 +16,9 @@
 const todoParams = reactive({
   title: "",
 });
+const emit = defineEmits(["onSubmit"]);
+const onSubmit = async (title: string) => {
+  await emit("onSubmit", title);
+  todoParams.title = "";
+};
 </script>

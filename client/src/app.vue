@@ -15,7 +15,7 @@ import { Todos } from "./gql/graphql";
 
 const getTodoQuery = gql`
   query GetTodos {
-    todos {
+    todos(orderBy: { createdAt: ASC }) {
       id
       title
       isDone
@@ -49,18 +49,21 @@ const deleteTodo = gql`
   }
 `;
 
-const { data } = await useAsyncQuery<{ todos: Todos[] }>(getTodoQuery);
+const { data, refresh } = await useAsyncQuery<{ todos: Todos[] }>(getTodoQuery);
 const { mutate: insertMutate } = useMutation(insertTodo);
 const { mutate: toggleMutate } = useMutation(toggleIsDoneTodo);
 const { mutate: deleteMutate } = useMutation(deleteTodo);
-const onSubmit = (title: string) => {
-  insertMutate({ title });
+const onSubmit = async (title: string) => {
+  await insertMutate({ title });
+  refresh();
 };
-const onToggle = (id: string, isDone: boolean) => {
-  toggleMutate({ id, isDone });
+const onToggle = async (id: string, isDone: boolean) => {
+  await toggleMutate({ id, isDone });
+  refresh();
 };
-const onDelete = (id: string) => {
-  deleteMutate({ id });
+const onDelete = async (id: string) => {
+  await deleteMutate({ id });
+  refresh();
 };
 </script>
 <style>

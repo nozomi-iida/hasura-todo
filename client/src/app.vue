@@ -10,11 +10,32 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { GetTodosDocument } from "./gql/graphql";
+import { Todos, Todos_Constraint, Todos_Insert_Input } from "./gql/graphql";
 
-const { data } = await useAsyncQuery(GetTodosDocument);
+const getTodoQuery = gql`
+  query GetTodos {
+    todos {
+      is_done
+      title
+      id
+    }
+  }
+`;
+
+const insertTodo = gql`
+  mutation InsertTodos($title: String!) {
+    insert_todos(objects: { title: $title }) {
+      returning {
+        id
+      }
+    }
+  }
+`;
+
+const { data } = await useAsyncQuery<{ todos: Todos[] }>(getTodoQuery);
+const { mutate } = useMutation(insertTodo);
 const onSubmit = (title: string) => {
-  console.log(title);
+  mutate({ title });
 };
 </script>
 <style>

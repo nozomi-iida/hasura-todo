@@ -1,8 +1,12 @@
 <template>
-  <ElTable>
-    <ElTableColumn label="Title" />
-    <ElTableColumn align="right">
-      <template>
+  <ElTable :data="todos">
+    <ElTableColumn prop="title" label="Title">
+      <template #default="scope">
+        <ElCheckbox :label="scope.row.title" />
+      </template>
+    </ElTableColumn>
+    <ElTableColumn align="right" label="Operations">
+      <template #default>
         <ElButton size="small">Edit</ElButton>
         <ElButton size="small" type="danger">Delete</ElButton>
       </template>
@@ -10,7 +14,17 @@
   </ElTable>
 </template>
 <script lang="ts" setup>
-// const props = defineProps({
-//   todos:
-// });
+import { Todos } from "../gql/graphql";
+
+const props = defineProps({
+  todos: {
+    type: Array<Todos>,
+    required: true,
+  },
+});
 </script>
+<style>
+.el-checkbox__label {
+  text-decoration: line-through;
+}
+</style>

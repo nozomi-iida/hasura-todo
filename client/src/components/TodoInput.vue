@@ -10,6 +10,6 @@
 </template>
 <script lang="ts" setup>
 const todoParams = reactive({
-  title: "Test",
+  title: "",
 });
 </script>

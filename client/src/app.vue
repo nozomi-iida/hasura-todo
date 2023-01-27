@@ -2,15 +2,11 @@
   <div class="todo">
     <h1>TODO App</h1>
     <TodoInput @onSubmit="onSubmit" />
-    <ul>
-      <li v-for="todo in data?.todos" :key="todo.id">
-        {{ todo.title }}
-      </li>
-    </ul>
+    <TodoTable v-if="data" :todos="data?.todos" />
   </div>
 </template>
 <script lang="ts" setup>
-import { Todos, Todos_Constraint, Todos_Insert_Input } from "./gql/graphql";
+import { Todos } from "./gql/graphql";
 
 const getTodoQuery = gql`
   query GetTodos {
@@ -35,13 +31,18 @@ const insertTodo = gql`
 const { data } = await useAsyncQuery<{ todos: Todos[] }>(getTodoQuery);
 const { mutate } = useMutation(insertTodo);
 const onSubmit = (title: string) => {
+  // mutateの引数がanyのまま
   mutate({ title });
 };
+const onToggle = (id: string, isDone: boolean) => {};
 </script>
 <style>
 .todo {
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 768px;
+  width: 100%;
+  margin: auto;
 }
 </style>

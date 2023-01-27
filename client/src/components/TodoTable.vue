@@ -1,14 +1,25 @@
 <template>
-  <ElTable :data="todos">
+  <ElTable class="todo-table" :data="todos">
     <ElTableColumn prop="title" label="Title">
       <template #default="scope">
-        <ElCheckbox :label="scope.row.title" />
+        <!-- changeの引数を渡せるようにしたい -->
+        <ElCheckbox
+          :class="{ checkbox: scope.row.isDone }"
+          :label="scope.row.title"
+          @change="(val) => $emit('onToggle', scope.row.id, val)"
+          :checked="scope.row.isDone"
+        />
       </template>
     </ElTableColumn>
     <ElTableColumn align="right" label="Operations">
-      <template #default>
+      <template #default="scope">
         <ElButton size="small">Edit</ElButton>
-        <ElButton size="small" type="danger">Delete</ElButton>
+        <ElButton
+          size="small"
+          type="danger"
+          @click="$emit('onDelete', scope.row.id)"
+          >Delete</ElButton
+        >
       </template>
     </ElTableColumn>
   </ElTable>
@@ -24,7 +35,7 @@ const props = defineProps({
 });
 </script>
 <style>
-.el-checkbox__label {
+.todo-table .checkbox .el-checkbox__label {
   text-decoration: line-through;
 }
 </style>

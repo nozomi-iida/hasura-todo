@@ -13,8 +13,8 @@ import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\n    fragment TodoTable on todos {\n      id\n      title\n    }\n  ": types.TodoTableFragmentDoc,
-    "\n  mutation InsertTodos($title: String!) {\n    insert_todos(objects: { title: $title }) {\n      returning {\n        id\n      }\n    }\n  }\n": types.InsertTodosDocument,
+    "\n    fragment TodoTable on Todos {\n      id\n      title\n    }\n  ": types.TodoTableFragmentDoc,
+    "\n  mutation InsertTodos($title: String!) {\n    insertTodos(objects: { title: $title }) {\n      returning {\n        id\n      }\n    }\n  }\n": types.InsertTodosDocument,
     "\n  query GetTodos {\n    todos {\n      id\n      title\n    }\n  }\n": types.GetTodosDocument,
 };
 
@@ -35,11 +35,11 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n    fragment TodoTable on todos {\n      id\n      title\n    }\n  "): (typeof documents)["\n    fragment TodoTable on todos {\n      id\n      title\n    }\n  "];
+export function graphql(source: "\n    fragment TodoTable on Todos {\n      id\n      title\n    }\n  "): (typeof documents)["\n    fragment TodoTable on Todos {\n      id\n      title\n    }\n  "];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  mutation InsertTodos($title: String!) {\n    insert_todos(objects: { title: $title }) {\n      returning {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation InsertTodos($title: String!) {\n    insert_todos(objects: { title: $title }) {\n      returning {\n        id\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  mutation InsertTodos($title: String!) {\n    insertTodos(objects: { title: $title }) {\n      returning {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation InsertTodos($title: String!) {\n    insertTodos(objects: { title: $title }) {\n      returning {\n        id\n      }\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

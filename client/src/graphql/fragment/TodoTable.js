@@ -1,6 +1,6 @@
 export const todoTable = {
   todo: gql`
-    fragment TodoTable on todos {
+    fragment TodoTable on Todos {
       id
       title
     }

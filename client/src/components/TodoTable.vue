@@ -13,7 +13,6 @@
     </ElTableColumn>
     <ElTableColumn align="right" label="Operations">
       <template #default="scope">
-        <ElButton size="small">Edit</ElButton>
         <ElButton
           size="small"
           type="danger"

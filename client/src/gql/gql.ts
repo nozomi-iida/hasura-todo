@@ -1,6 +1,6 @@
 /* eslint-disable */
 import * as types from './graphql';
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import type { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
 
 /**
  * Map of all GraphQL operations in the project.
@@ -13,7 +13,9 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\n  query GetTodos {\n    todos {\n      id\n      created_at\n      updated_at\n      title\n      is_done\n    }\n  }\n": types.GetTodosDocument,
+    "\n    fragment TodoTable on todos {\n      id\n      title\n    }\n  ": types.TodoTableFragmentDoc,
+    "\n  mutation InsertTodos($title: String!) {\n    insert_todos(objects: { title: $title }) {\n      returning {\n        id\n      }\n    }\n  }\n": types.InsertTodosDocument,
+    "\n  query GetTodos {\n    todos {\n      id\n      title\n    }\n  }\n": types.GetTodosDocument,
 };
 
 /**
@@ -33,7 +35,15 @@ export function graphql(source: string): unknown;
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query GetTodos {\n    todos {\n      id\n      created_at\n      updated_at\n      title\n      is_done\n    }\n  }\n"): (typeof documents)["\n  query GetTodos {\n    todos {\n      id\n      created_at\n      updated_at\n      title\n      is_done\n    }\n  }\n"];
+export function graphql(source: "\n    fragment TodoTable on todos {\n      id\n      title\n    }\n  "): (typeof documents)["\n    fragment TodoTable on todos {\n      id\n      title\n    }\n  "];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation InsertTodos($title: String!) {\n    insert_todos(objects: { title: $title }) {\n      returning {\n        id\n      }\n    }\n  }\n"): (typeof documents)["\n  mutation InsertTodos($title: String!) {\n    insert_todos(objects: { title: $title }) {\n      returning {\n        id\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query GetTodos {\n    todos {\n      id\n      title\n    }\n  }\n"): (typeof documents)["\n  query GetTodos {\n    todos {\n      id\n      title\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

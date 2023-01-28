@@ -1,0 +1,1 @@
+INSERT INTO "public"."todos"("id", "created_at", "updated_at", "tidle", "is_done") VALUES (E'711b7d81-8ab3-4f14-bc40-94706c21ee89', E'2023-01-28T02:35:42.427096+00:00', E'2023-01-28T02:35:42.427096+00:00', E'LTのスライドを作る', false);
